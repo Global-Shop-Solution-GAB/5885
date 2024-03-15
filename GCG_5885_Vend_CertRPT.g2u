@@ -1,0 +1,419 @@
+Program.Sub.ScreenSU.Start
+Gui.F_PreProc..Create
+Gui.F_PreProc..Caption("Vendor Certificates")
+Gui.F_PreProc..Size(5610,7575)
+Gui.F_PreProc..MinX(0)
+Gui.F_PreProc..MinY(0)
+Gui.F_PreProc..Position(0,0)
+Gui.F_PreProc..BackColor(-2147483633)
+Gui.F_PreProc..MousePointer(0)
+Gui.F_PreProc..Event(UnLoad,F_PreProc_UnLoad)
+Gui.F_PreProc..MaxButton(False)
+Gui.F_PreProc..Sizeable(False)
+Gui.F_PreProc.ddlCerts.Create(DropDownList)
+Gui.F_PreProc.ddlCerts.Size(5235,330)
+Gui.F_PreProc.ddlCerts.Position(135,330)
+Gui.F_PreProc.lblCerts.Create(Label,"Certificate",True,1935,255,0,165,120,True,0,"Arial",8,-2147483633,0)
+Gui.F_PreProc.dtpBeg.Create(DatePicker)
+Gui.F_PreProc.dtpBeg.Size(1935,285)
+Gui.F_PreProc.dtpBeg.Position(315,6075)
+Gui.F_PreProc.dtpEnd.Create(DatePicker)
+Gui.F_PreProc.dtpEnd.Size(1935,285)
+Gui.F_PreProc.dtpEnd.Position(3165,6075)
+Gui.F_PreProc.lblBeg.Create(Label,"Start Date",True,1185,255,0,345,5865,True,0,"Arial",8,-2147483633,0)
+Gui.F_PreProc.lblEnd.Create(Label,"End Date",True,1935,255,0,3195,5865,True,0,"Arial",8,-2147483633,0)
+Gui.F_PreProc.cmdRun.Create(Button)
+Gui.F_PreProc.cmdRun.Size(1335,465)
+Gui.F_PreProc.cmdRun.Position(270,6705)
+Gui.F_PreProc.cmdRun.Caption("Run")
+Gui.F_PreProc.cmdRun.Event(Click,cmdRun_Click)
+Gui.F_PreProc.ddlReport.Create(DropDownList)
+Gui.F_PreProc.ddlReport.Size(1365,330)
+Gui.F_PreProc.ddlReport.Position(3225,6750)
+Gui.F_PreProc.lblReport.Create(Label,"Report Type",True,1155,255,0,3210,6540,True,0,"Arial",8,-2147483633,0)
+Gui.F_PreProc.cmdAdd.Create(Button)
+Gui.F_PreProc.cmdAdd.Size(1335,465)
+Gui.F_PreProc.cmdAdd.Position(270,855)
+Gui.F_PreProc.cmdAdd.Caption("Add")
+Gui.F_PreProc.cmdAdd.Event(Click,cmdAdd_Click)
+Gui.F_PreProc.cmdDel.Create(Button)
+Gui.F_PreProc.cmdDel.Size(1335,465)
+Gui.F_PreProc.cmdDel.Position(1860,855)
+Gui.F_PreProc.cmdDel.Caption("Delete")
+Gui.F_PreProc.cmdDel.Event(Click,cmdDel_Click)
+Gui.F_PreProc.gsgcCerts.Create(GsGridControl)
+Gui.F_PreProc.gsgcCerts.Size(5490,4200)
+Gui.F_PreProc.gsgcCerts.Position(0,1500)
+Gui.F_PreProc.chkAllCerts.Create(CheckBox)
+Gui.F_PreProc.chkAllCerts.Size(1800,360)
+Gui.F_PreProc.chkAllCerts.Position(3450,720)
+Gui.F_PreProc.chkAllCerts.Caption("All Certificates")
+Gui.F_PreProc.chkAllCerts.Event(Click,chkAllCerts_Click)
+Gui.F_PreProc.chkNoCert.Create(CheckBox)
+Gui.F_PreProc.chkNoCert.Size(1620,360)
+Gui.F_PreProc.chkNoCert.Position(3450,1095)
+Gui.F_PreProc.chkNoCert.Caption("All Transactions")
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.External.Include.Library("GCG_5885_Try_Catch.lib")
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'Created by BixRB
+'Date: 7 Feb 2020
+'GCG_5885_Vend_CertRPT.g2u
+'Atec Inc.
+'Uses the certificates tables to query the AP_OPEN_ITEMS table for the amount that vendors in a certificate group had been paid
+V.Local.iCnt.Declare
+V.Local.iListIndex.Declare
+V.Local.dBegMonth.Declare
+V.Local.dEndMonth.Declare
+F.Intrinsic.Control.Try
+
+'OPENCONNECTION
+F.ODBC.Connection!con.OpenCompanyConnection
+F.Data.DataTable.CreateFromSQL("dtRptIds","con","select TYPE, RPT_ID from GCG_5885_BI_RPTS;",True)
+F.Data.DataTable.CreateFromSQL("dtMaint","con","select ID, rtrim(CERTIFICATION) as CERTIFICATION from GCG_5885_CERTS;",False)
+F.ODBC.Connection!con.Close
+'CLOSECONNECTION
+
+F.Data.DataView.Create("dtRptIds","dvSummary")
+F.Data.DataView.Create("dtRptIds","dvDetail")
+F.Data.DataView.SetFilter("dtRptIds","dvSummary","TYPE = 0")
+F.Data.DataView.SetFilter("dtRptIds","dvDetail","TYPE = 1")
+F.Intrinsic.Control.If(V.DataView.dtRptIds!dvSummary.RowCount,>,0)
+	Gui.F_PreProc.ddlReport.AddItem("Summary")
+F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.If(V.DataView.dtRptIds!dvDetail.RowCount,>,0)
+	Gui.F_PreProc.ddlReport.AddItem("Detail")
+F.Intrinsic.Control.EndIf
+
+'ListIndex - ddlReport
+F.Global.Registry.ReadValue(V.Caller.User,V.Caller.CompanyCode,"ddlReport",5885,1000,1,-1,V.Local.iListIndex)
+F.Intrinsic.Control.If(V.Local.iListIndex,<>,-1)
+	Gui.F_PreProc.ddlReport.ListIndex(V.Local.iListIndex)
+F.Intrinsic.Control.EndIf
+
+Gui.F_PreProc.ddlCerts.AddItems("DataTable","dtMaint","CERTIFICATION","CERTIFICATION")
+
+F.Intrinsic.Date.BeginningOfMonth(V.Ambient.Date,V.Local.dBegMonth)
+Gui.F_PreProc.dtpBeg.Value(V.Local.dBegMonth)
+F.Intrinsic.Date.EndOfMonth(V.Ambient.Date,V.Local.dEndMonth)
+Gui.F_PreProc.dtpEnd.Value(V.Local.dEndMonth)
+
+F.Data.DataTable.Create("dtCerts",True)
+F.Data.DataTable.AddColumn("dtCerts","CERTIFICATION","String")
+
+Gui.F_PreProc.gsgcCerts.AddGridviewFromDatatable("gvCerts","dtCerts")
+
+Gui.F_PreProc.gsgcCerts.SetGridviewProperty("gvCerts","Editable",False)
+Gui.F_PreProc.gsgcCerts.SetGridviewProperty("gvCerts","ReadOnly",True)
+Gui.F_PreProc.gsgcCerts.SetGridviewProperty("gvCerts","ShowDetailTabs",False)
+Gui.F_PreProc.gsgcCerts.SetGridviewProperty("gvCerts","ShowGroupPanel",False)
+Gui.F_PreProc.gsgcCerts.SetGridviewProperty("gvCerts","AllowColumnMoving",False)
+Gui.F_PreProc.gsgcCerts.SetGridviewProperty("gvCerts","OptionsMenuShowAutoFilterRowItem",False)
+
+Gui.F_PreProc.gsgcCerts.SetColumnProperty("gvCerts","CERTIFICATION","AllowFocus",False)
+Gui.F_PreProc.gsgcCerts.SetColumnProperty("gvCerts","CERTIFICATION","AllowShowHide",False)
+Gui.F_PreProc.gsgcCerts.SetColumnProperty("gvCerts","CERTIFICATION","AllowSize",False)
+Gui.F_PreProc.gsgcCerts.SetColumnProperty("gvCerts","CERTIFICATION","AllowSort",False)
+Gui.F_PreProc.gsgcCerts.SetColumnProperty("gvCerts","CERTIFICATION","AllowFilter",False)
+Gui.F_PreProc.gsgcCerts.SetColumnProperty("gvCerts","CERTIFICATION","AllowGroup",False)
+Gui.F_PreProc.gsgcCerts.SetColumnProperty("gvCerts","CERTIFICATION","Caption","Certificates")
+
+Gui.F_PreProc.gsgcCerts.MainView("gvCerts")
+
+Gui.F_PreProc..Show
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.F_PreProc_UnLoad.Start
+F.Intrinsic.Control.End
+Program.Sub.F_PreProc_UnLoad.End
+
+Program.Sub.cmdRun_Click.Start
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.If(V.Screen.F_PreProc!ddlReport.ListIndex,=,-1)
+	Gui.F_PreProc.ddlReport.SetFocus
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.ElseIf(V.DataTable.dtCerts.RowCount,=,0,and,V.Screen.F_PreProc!chkAllCerts.CheckedAsBoolean,=,False)
+	Gui.F_PreProc.ddlCerts.SetFocus
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+
+'ListIndex - ddlReport
+F.Global.Registry.AddValue(V.Caller.User,V.Caller.CompanyCode,"ddlReport",5885,1000,False,"ListIndex",False,V.Screen.F_PreProc!ddlReport.ListIndex,-999.0,1/1/1980,12:00:00 AM,"")
+
+Gui.F_PreProc..Visible(False)
+
+F.Intrinsic.UI.InvokeWaitDialog("Opening necessary tables from DataBase.","Processing AP data by Vendor Certificate")
+
+F.Intrinsic.Control.CallSub(GetVendorCertInfo)
+'returns dtVendCertActive
+
+F.Intrinsic.Control.CallSub(GetAPTransDataTable,"BegDate",V.Screen.F_PreProc!dtpBeg.Value,"EndDate",V.Screen.F_PreProc!dtpEnd.Value)
+'returns dtAPCertInfo
+
+F.Intrinsic.Control.If(V.DataTable.dtAPCertInfo.RowCount,=,0)
+	F.Intrinsic.UI.Msgbox("Certificates and Date Range used against the database returned nothing.","No Data Found")
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.CallSub(SaveToBITable)
+'Returns V.Args.RptID
+
+F.Intrinsic.Control.CallSub(CallBIReport,"RptID",V.Args.RptID,"BegDate",V.Screen.F_PreProc!dtpBeg.Value,"EndDate",V.Screen.F_PreProc!dtpEnd.Value)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdRun_Click.End
+
+Program.Sub.GetVendorCertInfo.Start
+V.Local.sCerts.Declare
+V.Local.sSQL.Declare
+V.Local.iCnt.Declare
+V.Local.d1900.Declare(Date,1/1/1900)
+V.Local.dStart.Declare
+V.Local.dEnd.Declare
+F.Intrinsic.Control.Try
+
+V.Local.dStart.Set(V.Screen.F_PreProc!dtpBeg.Value)
+V.Local.dEnd.Set(V.Screen.F_PreProc!dtpEnd.Value)
+F.Data.DataView.Create("dtCerts","dvCerts")
+F.Data.DataView.ToString("dtCerts","dvCerts","CERTIFICATION","","*!*",V.Local.sCerts)
+F.Intrinsic.String.Replace(V.Local.sCerts,"*!*","', '",V.Local.sCerts)
+F.Intrinsic.Control.If(V.Screen.F_PreProc!chkAllCerts.CheckedAsBoolean.Not)
+	F.Intrinsic.String.Build("select A.VENDOR, rtrim(A.CERTIFICATION) as CERTIFICATION, A.START_DATE, A.END_DATE from GCG_5885_VEND_CERTS A where A.CERTIFICATION in ('{0}')",V.Local.sCerts,V.Local.sSQL)
+F.Intrinsic.Control.Else
+	V.Local.sSQL.Set("select A.VENDOR, rtrim(A.CERTIFICATION) as CERTIFICATION, A.START_DATE, A.END_DATE from GCG_5885_VEND_CERTS A")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.If(V.Screen.F_PreProc!chkNoCert.CheckedAsBoolean)
+'	F.Intrinsic.String.Build("{0} union select B.VENDOR, 'All Transactions' as CERTIFICATION, convert('1900-01-01', SQL_Date) as START_DATE, convert('9999-12-31', SQL_Date) as END_DATE from V_VENDOR_MASTER B where B.VENDOR not in (select VENDOR from GCG_5885_VEND_CERTS",V.Local.sSQL,V.Local.sSQL)
+	F.Intrinsic.String.Build("{0} union select B.VENDOR, 'All Transactions' as CERTIFICATION, convert('1900-01-01', SQL_Date) as START_DATE, convert('9999-12-31', SQL_Date) as END_DATE from V_VENDOR_MASTER B",V.Local.sSQL,V.Local.sSQL)
+'	F.Intrinsic.Control.If(V.Screen.F_PreProc!chkAllCerts.CheckedAsBoolean)
+'		F.Intrinsic.String.Build("{0} where",V.Local.sSQL,V.Local.sSQL)
+'	F.Intrinsic.Control.Else
+'		F.Intrinsic.String.Build("{0} where CERTIFICATION in ('{1}') and",V.Local.sSQL,V.Local.sCerts,V.Local.sSQL)
+'	F.Intrinsic.Control.EndIf
+'	F.Intrinsic.String.Build("{0} NOT(START_DATE > '{1}' and START_DATE > '{2}') and NOT(END_DATE < '{1}' and END_DATE < '{2}'))",V.Local.sSQL,V.Local.dStart.PervasiveDate,V.Local.dEnd.PervasiveDate,V.Local.sSQL)
+F.Intrinsic.Control.EndIf
+F.Intrinsic.String.Build("{0};",V.Local.sSQL,V.Local.sSQL)
+
+'OPENCONNECTION
+F.ODBC.Connection!con.OpenCompanyConnection
+F.Data.DataTable.CreateFromSQL("dtVendCerts","con",V.Local.sSQL,True)
+F.ODBC.Connection!con.Close
+'CLOSECONNECTION
+
+F.Intrinsic.Control.If(V.DataTable.dtVendCerts.RowCount,=,0)
+	F.Intrinsic.UI.Msgbox("No vendors has any of the selected certificates logged in their certifications, active or inactive.","Exiting Program")
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndIf
+
+'Loop through returned data and parse what vendors with the cert can be kept for the selected date range
+F.Intrinsic.Control.For(V.Local.iCnt,0,V.DataTable.dtVendCerts.RowCount--,1)
+	F.Intrinsic.String.Build("Processing Vendor {0}'s certification {1} date range",V.DataTable.dtVendCerts(V.Local.iCnt).VENDOR!FieldValTrim,V.DataTable.dtVendCerts(V.Local.iCnt).CERTIFICATION!FieldVal,V.Local.sSQL)
+	F.Intrinsic.UI.ChangeWaitStatus(V.Local.sSQL,V.Local.iCnt,0,V.DataTable.dtVendCerts.RowCount--)
+	
+	F.Intrinsic.Control.If(V.DataTable.dtVendCerts(V.Local.iCnt).START_DATE!FieldVal,<,V.Screen.F_PreProc!dtpBeg.Value)
+		'Vendor's cert start date is before the selected BegDate
+		F.Intrinsic.Control.If(V.DataTable.dtVendCerts(V.Local.iCnt).END_DATE!FieldVal,<,V.Screen.F_PreProc!dtpBeg.Value)
+			'Vendor's cert start date and end date is before the selected BegDate AXED (Set dates to 1/1/1900)
+			F.Data.DataTable.SetValue("dtVendCerts",V.Local.iCnt,"START_DATE",V.Local.d1900,"END_DATE",V.Local.d1900)
+		F.Intrinsic.Control.ElseIf(V.DataTable.dtVendCerts(V.Local.iCnt).END_DATE!FieldVal,>=,V.Screen.F_PreProc!dtpBeg.Value)
+			'Vendor's cert end date is equal to or greater than the selected BegDate SET START_DATE TO BEGDATE
+			F.Data.DataTable.SetValue("dtVendCerts",V.Local.iCnt,"START_DATE",V.Screen.F_PreProc!dtpBeg.Value)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.If(V.DataTable.dtVendCerts(V.Local.iCnt).END_DATE!FieldVal,>,V.Screen.F_PreProc!dtpEnd.Value)
+		'Vendor's cert end date is after the selected EndDate
+		F.Intrinsic.Control.If(V.DataTable.dtVendCerts(V.Local.iCnt).START_DATE!FieldVal,>,V.Screen.F_PreProc!dtpEnd.Value)
+			'Vendor's cert start date and end date is after the selected EndDate AXED (Set dates to 1/1/1900)
+			F.Data.DataTable.SetValue("dtVendCerts",V.Local.iCnt,"START_DATE",V.Local.d1900,"END_DATE",V.Local.d1900)
+		F.Intrinsic.Control.ElseIf(V.DataTable.dtVendCerts(V.Local.iCnt).START_DATE!FieldVal,<=,V.Screen.F_PreProc!dtpEnd.Value)
+			'Vendor's cert start date is equal to or before the selected EndDate SET END_DATE TO ENDDATE
+			F.Data.DataTable.SetValue("dtVendCerts",V.Local.iCnt,"END_DATE",V.Screen.F_PreProc!dtpEnd.Value)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+'Any vendor whose start and end date is 1/1/1900 needs to be removed
+F.Data.DataView.Create("dtVendCerts","dvActiveCert")
+F.Data.DataView.SetFilter("dtVendCerts","dvActiveCert","START_DATE <> #1/1/1900# and END_DATE <> #1/1/1900#")
+F.Data.DataView.ToDataTable("dtVendCerts","dvActiveCert","dtVendCertsActive",True)
+F.Data.DataTable.Close("dtVendCerts")
+
+'This converts the 'certified dates' in dtVendCerts to the 'applicable range' in dtVendCertsActive
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.GetVendorCertInfo.End
+
+Program.Sub.GetAPTransDataTable.Start
+V.Local.sSQL.Declare
+V.Local.sFilter.Declare
+V.Local.iCnt.Declare
+F.Intrinsic.Control.Try
+
+F.Intrinsic.UI.ChangeWaitStatus("Extracting the AP Open Items data. Hang Tight!")
+F.Intrinsic.String.Build("select rtrim(VENDOR) as VENDOR, PURCHASE_ORDER, INVOICE, DATE_INVOICE, DATE_INVOICE_DUE, CHECK_NUM, DATE_CHECK, AMT_TRANSACTION from V_AP_OPEN_ITEMS where DATE_CHECK between '{0}' and '{1}';",V.Args.BegDate.PervasiveDate,V.Args.EndDate.PervasiveDate,V.Local.sSQL)
+'OPENCONNECTION
+F.ODBC.Connection!con.OpenCompanyConnection
+F.Data.DataTable.CreateFromSQL("dtAPOpenItems","con",V.Local.sSQL,True)
+F.Intrinsic.UI.ChangeWaitStatus("Extracting the AP History Items data. Hang Tight!")
+F.Intrinsic.String.Build("select rtrim(VENDOR) as VENDOR, PURCHASE_ORDER, INVOICE, DATE_INVOICE, DATE_INVOICE_DUE, CHECK_NUM, DATE_CHECK, AMT_TRANSACTION from V_AP_HIST where DATE_CHECK between '{0}' and '{1}';",V.Args.BegDate.PervasiveDate,V.Args.EndDate.PervasiveDate,V.Local.sSQL)
+F.Data.DataTable.CreateFromSQL("dtAPHistItems","con",V.Local.sSQL,True)
+F.ODBC.Connection!con.Close
+'CLOSECONNECTION
+
+F.Data.DataTable.Merge("dtAPHistItems","dtAPOpenItems",True,2)
+F.Data.DataTable.Close("dtAPHistItems")
+'We need to know what certification each transaction falls under for reporting
+F.Data.DataTable.AddColumn("dtAPOpenItems","CERTIFICATION","String")
+F.Data.DataTable.AddColumn("dtAPOpenItems","TERMINAL","String",V.Caller.Terminal)
+
+F.Data.DataTable.Clone("dtAPOpenItems","dtAPCertInfo",True)
+F.Data.DataView.Create("dtAPOpenItems","dvVendorItems")
+
+'Loop through vendors list and add items to new table from AP Open Items
+F.Intrinsic.Control.For(V.Local.iCnt,0,V.DataTable.dtVendCertsActive.RowCount--,1)
+	F.Intrinsic.String.Build("Searching for Vendor {0}'s transactions.",V.DataTable.dtVendCertsActive(V.Local.iCnt).VENDOR!FieldVal,V.Local.sSQL)
+	F.Intrinsic.UI.ChangeWaitStatus(V.Local.sSQL,V.Local.iCnt,0,V.DataTable.dtVendCertsActive.RowCount--)
+	
+	F.Intrinsic.String.Build("VENDOR = '{0}' and DATE_CHECK >= #{1}# and DATE_CHECK <= #{2}#",V.DataTable.dtVendCertsActive(V.Local.iCnt).VENDOR!FieldVal,V.DataTable.dtVendCertsActive(V.Local.iCnt).START_DATE!FieldVal,V.DataTable.dtVendCertsActive(V.Local.iCnt).END_DATE!FieldVal,V.Local.sFilter)
+	F.Data.DataView.SetFilter("dtAPOpenItems","dvVendorItems",V.Local.sFilter)
+	'Write in the certification for the transactions that meet the vendor and date criteria
+	F.Data.DataView.SetValue("dtAPOpenItems","dvVendorItems",-1,"CERTIFICATION",V.DataTable.dtVendCertsActive(V.Local.iCnt).CERTIFICATION!FieldVal)
+	F.Data.DataView.ToDataTable("dtAPOpenItems","dvVendorItems","dtTemp",True)
+	
+	F.Data.DataTable.Merge("dtTemp","dtAPCertInfo",True,2)
+	F.Data.DataTable.Close("dtTemp")
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+F.Intrinsic.UI.CloseWaitDialog
+
+F.Data.DataTable.Close("dtAPOpenItems")
+F.Data.DataTable.Close("dtVendCertsActive")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.GetAPTransDataTable.End
+
+Program.Sub.SaveToBITable.Start
+V.Local.sSQL.Declare
+V.Local.iRptID.Declare
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.If(V.Screen.F_PreProc!ddlReport.ListIndex,=,0,and,V.DataView.dtRptIds!dvSummary.RowCount,>,0)
+	V.Local.iRptID.Set(V.DataView.dtRptIds!dvSummary(0).RPT_ID!FieldVal)
+F.Intrinsic.Control.Else
+	V.Local.iRptID.Set(V.DataView.dtRptIds!dvDetail(0).RPT_ID!FieldVal)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Variable.AddRV("RptID",V.Local.iRptID)
+
+F.Data.DataTable.AddColumn("dtAPCertInfo","RPT_ID","String",V.Local.iRptID)
+F.Intrinsic.String.Build("delete from GCG_5885_BI_CERT where TERMINAL = '{0}' and RPT_ID = '{1}';",V.Caller.Terminal,V.Local.iRptID,V.Local.sSQL)
+'OPENCONNECTION
+F.ODBC.Connection!con.OpenCompanyConnection
+F.ODBC.Connection!con.Execute(V.Local.sSQL)
+F.Data.DataTable.SaveToDB("dtAPCertInfo","con","GCG_5885_BI_CERT","",128)
+F.ODBC.Connection!con.Close
+'CLOSECONNECTION
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.SaveToBITable.End
+
+Program.Sub.cmdAdd_Click.Start
+V.Local.sFilter.Declare
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.If(V.Screen.F_PreProc!ddlCerts.ListIndex,=,-1)
+	Gui.F_PreProc.ddlCerts.SetFocus
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+
+F.Data.DataView.Create("dtCerts","dvCheck")
+F.Intrinsic.String.Build("CERTIFICATION = '{0}'",V.Screen.F_PreProc!ddlCerts.Text,V.Local.sFilter)
+F.Data.DataView.SetFilter("dtCerts","dvCheck",V.Local.sFilter)
+
+F.Intrinsic.Control.If(V.DataView.dtCerts!dvCheck.RowCount,=,0)
+	F.Data.DataTable.AddRow("dtCerts","CERTIFICATION",V.Screen.F_PreProc!ddlCerts.Text)
+F.Intrinsic.Control.EndIf
+
+F.Data.DataView.Close("dtCerts","dvCheck")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdAdd_Click.End
+
+Program.Sub.cmdDel_Click.Start
+V.Local.sRows.Declare
+V.Local.iRow.Declare
+F.Intrinsic.Control.Try
+
+Gui.F_PreProc.gsgcCerts.GetSelectedRows("gvCerts",V.Local.sRows)
+
+F.Intrinsic.Control.If(V.Local.sRows,!=,"")
+	F.Intrinsic.String.Split(V.Local.sRows,"*!*",V.Local.sRows)
+	
+	F.Intrinsic.Control.For(V.Local.iRow,V.Local.sRows.UBound,0,-1)
+		F.Data.DataTable.DeleteRow("dtCerts",V.Local.sRows(V.Local.iRow).Long)
+	F.Intrinsic.Control.Next(V.Local.iRow)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdDel_Click.End
+
+Program.Sub.chkAllCerts_Click.Start
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.BlockEvents
+Gui.F_PreProc.ddlCerts.Enabled(V.Screen.F_PreProc!chkAllCerts.CheckedAsBoolean.Not)
+Gui.F_PreProc.cmdAdd.Enabled(V.Screen.F_PreProc!chkAllCerts.CheckedAsBoolean.Not)
+Gui.F_PreProc.cmdDel.Enabled(V.Screen.F_PreProc!chkAllCerts.CheckedAsBoolean.Not)
+Gui.F_PreProc.gsgcCerts.Enabled(V.Screen.F_PreProc!chkAllCerts.CheckedAsBoolean.Not)
+F.Intrinsic.Control.UnBlockEvents
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.chkAllCerts_Click.End
+
+Program.Sub.CallBIReport.Start
+'V.Args.RptID, V.Args.BegDate, V.Args.EndDate
+V.Local.sParams.Declare
+V.Local.sValues.Declare
+V.Local.iRunID.Declare
+V.Local.iLogID.Declare
+F.Intrinsic.Control.Try
+
+F.Global.BI.GetRunID(V.Local.iRunID)
+F.Global.BI.StartLogging(V.Local.iRunID,V.Args.RptID,0,"",V.Local.iLogID)
+
+V.Local.sParams.Set("TERMINAL*!*RPT_ID*!*STARTDATE*!*ENDDATE")
+F.Intrinsic.String.Build("{0}*!*{1}*!*{2}*!*{3}",V.Caller.Terminal,V.Args.RptID,V.Args.BegDate.FormatM/D/YYYY,V.Args.EndDate.FormatM/D/YYYY,V.Local.sValues)
+
+F.Global.BI.RunReportPreProcessor(V.Local.iRunID,V.Local.iLogID,V.Local.sParams,V.Local.sValues,,-1,True,,-1,,-1,,,V.Local.iRunID)
+
+F.Global.BI.StopLogging(V.Local.iLogID)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.CallBIReport.End
