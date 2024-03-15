@@ -1,0 +1,583 @@
+Program.Sub.ScreenSU.Start
+Gui.F_Cert_Maint..Create
+Gui.F_Cert_Maint..Caption("Maint")
+Gui.F_Cert_Maint..Size(3000,7530)
+Gui.F_Cert_Maint..MinX(0)
+Gui.F_Cert_Maint..MinY(0)
+Gui.F_Cert_Maint..Position(0,0)
+Gui.F_Cert_Maint..BackColor(-2147483633)
+Gui.F_Cert_Maint..MousePointer(0)
+Gui.F_Cert_Maint..Event(UnLoad,F_Cert_Maint_UnLoad)
+Gui.F_Cert_Maint.gsgcMaint.Create(GsGridControl)
+Gui.F_Cert_Maint.gsgcMaint.Size(2880,4665)
+Gui.F_Cert_Maint.gsgcMaint.Position(0,840)
+Gui.F_Cert_Maint.gsgcMaint.Anchor(15)
+Gui.F_Cert_Maint.gsgcMaint.Event(CellValueChanged,gsgcMaint_CellValueChanged)
+Gui.F_Cert_Maint.cmdAddMaint.Create(Button)
+Gui.F_Cert_Maint.cmdAddMaint.Size(1035,435)
+Gui.F_Cert_Maint.cmdAddMaint.Position(270,195)
+Gui.F_Cert_Maint.cmdAddMaint.Caption("Add")
+Gui.F_Cert_Maint.cmdAddMaint.Event(Click,cmdAddMaint_Click)
+Gui.F_Cert_Maint.cmdDelMaint.Create(Button)
+Gui.F_Cert_Maint.cmdDelMaint.Size(1035,435)
+Gui.F_Cert_Maint.cmdDelMaint.Position(1560,195)
+Gui.F_Cert_Maint.cmdDelMaint.Caption("Delete")
+Gui.F_Cert_Maint.cmdDelMaint.Event(Click,cmdDelMaint_Click)
+Gui.F_Cert_Maint.txtSum.Create(TextBox,"",True,1980,300,0,135,5880,True,0,"Arial",8,-2147483643,1)
+Gui.F_Cert_Maint.txtSum.Locked(True)
+Gui.F_Cert_Maint.txtSum.Anchor(6)
+Gui.F_Cert_Maint.lblSum.Create(Label,"Summary Report ID",True,1935,255,0,120,5670,True,0,"Arial",8,-2147483633,0)
+Gui.F_Cert_Maint.lblSum.Anchor(6)
+Gui.F_Cert_Maint.cmdSumBRW.Create(Button)
+Gui.F_Cert_Maint.cmdSumBRW.Size(375,375)
+Gui.F_Cert_Maint.cmdSumBRW.Position(2295,5850)
+Gui.F_Cert_Maint.cmdSumBRW.Caption("^")
+Gui.F_Cert_Maint.cmdSumBRW.Event(Click,cmdBRW_click)
+Gui.F_Cert_Maint.cmdSumBRW.Anchor(6)
+Gui.F_Cert_Maint.cmdDetBRW.Create(Button)
+Gui.F_Cert_Maint.cmdDetBRW.Size(375,375)
+Gui.F_Cert_Maint.cmdDetBRW.Position(2295,6585)
+Gui.F_Cert_Maint.cmdDetBRW.Caption("^")
+Gui.F_Cert_Maint.cmdDetBRW.Event(Click,cmdBRW_click)
+Gui.F_Cert_Maint.cmdDetBRW.Anchor(6)
+Gui.F_Cert_Maint.txtDet.Create(TextBox,"",True,1980,300,0,135,6600,True,0,"Arial",8,-2147483643,1)
+Gui.F_Cert_Maint.txtDet.Locked(True)
+Gui.F_Cert_Maint.txtDet.Anchor(6)
+Gui.F_Cert_Maint.lblDet.Create(Label,"Detail Report ID",True,1935,255,0,120,6390,True,0,"Arial",8,-2147483633,0)
+Gui.F_Cert_Maint.lblDet.Anchor(6)
+Gui.F_Vend_Certs..Create
+Gui.F_Vend_Certs..Caption("{Vendor} Certifications")
+Gui.F_Vend_Certs..Size(6825,5370)
+Gui.F_Vend_Certs..MinX(0)
+Gui.F_Vend_Certs..MinY(0)
+Gui.F_Vend_Certs..Position(0,0)
+Gui.F_Vend_Certs..BackColor(-2147483633)
+Gui.F_Vend_Certs..MousePointer(0)
+Gui.F_Vend_Certs..Event(UnLoad,F_Vend_Certs_UnLoad)
+Gui.F_Vend_Certs.gsgcCerts.Create(GsGridControl)
+Gui.F_Vend_Certs.gsgcCerts.Size(6705,4245)
+Gui.F_Vend_Certs.gsgcCerts.Position(0,840)
+Gui.F_Vend_Certs.gsgcCerts.Anchor(15)
+Gui.F_Vend_Certs.cmdAdd.Create(Button)
+Gui.F_Vend_Certs.cmdAdd.Size(1035,435)
+Gui.F_Vend_Certs.cmdAdd.Position(270,195)
+Gui.F_Vend_Certs.cmdAdd.Caption("Add")
+Gui.F_Vend_Certs.cmdAdd.Event(Click,cmdAdd_Click)
+Gui.F_Vend_Certs.cmdDel.Create(Button)
+Gui.F_Vend_Certs.cmdDel.Size(1035,435)
+Gui.F_Vend_Certs.cmdDel.Position(1560,195)
+Gui.F_Vend_Certs.cmdDel.Caption("Delete")
+Gui.F_Vend_Certs.cmdDel.Event(Click,cmdDel_Click)
+Gui.F_New_Cert..Create
+Gui.F_New_Cert..Caption("New Certification")
+Gui.F_New_Cert..Size(6135,2655)
+Gui.F_New_Cert..MinX(0)
+Gui.F_New_Cert..MinY(0)
+Gui.F_New_Cert..Position(0,0)
+Gui.F_New_Cert..BackColor(-2147483633)
+Gui.F_New_Cert..MousePointer(0)
+Gui.F_New_Cert..Event(UnLoad,F_New_Cert_UnLoad)
+Gui.F_New_Cert..MaxButton(False)
+Gui.F_New_Cert..Sizeable(False)
+Gui.F_New_Cert.ddlCert.Create(DropDownList)
+Gui.F_New_Cert.ddlCert.Size(5670,330)
+Gui.F_New_Cert.ddlCert.Position(195,360)
+Gui.F_New_Cert.dtpStartDate.Create(DatePicker)
+Gui.F_New_Cert.dtpStartDate.Size(1935,285)
+Gui.F_New_Cert.dtpStartDate.Position(405,1185)
+Gui.F_New_Cert.dtpStartDate.Event(Change,dtpStartDate_Change)
+Gui.F_New_Cert.dtpEndDate.Create(DatePicker)
+Gui.F_New_Cert.dtpEndDate.Size(1935,285)
+Gui.F_New_Cert.dtpEndDate.Position(3075,1185)
+Gui.F_New_Cert.dtpEndDate.Event(Change,dtpEndDate_Change)
+Gui.F_New_Cert.lblCert.Create(Label,"Certification",True,1935,255,0,225,150,True,0,"Arial",8,-2147483633,0)
+Gui.F_New_Cert.lblStartDate.Create(Label,"Start Date",True,1935,255,0,435,975,True,0,"Arial",8,-2147483633,0)
+Gui.F_New_Cert.lblEndDate.Create(Label,"End Date",True,1935,255,0,3105,975,True,0,"Arial",8,-2147483633,0)
+Gui.F_New_Cert.cmdSaveCert.Create(Button)
+Gui.F_New_Cert.cmdSaveCert.Size(1035,435)
+Gui.F_New_Cert.cmdSaveCert.Position(495,1770)
+Gui.F_New_Cert.cmdSaveCert.Caption("Save")
+Gui.F_New_Cert.cmdSaveCert.Event(Click,cmdSaveCert_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.External.Include.Library("GCG_5885_Try_Catch.lib")
+V.Global.sVendor.Declare
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'Created by BixRB
+'Date 7 Feb 2020
+'GCG_5885_Vend_Cert.g2u
+'Atec, Inc.
+'Logging utility for vendors certification
+V.Local.sVendor.Declare
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+	F.Intrinsic.Control.Case(14460)
+		'Vendor Master Populate Hook - overwrite script buttons
+		V.Passed.000022.Set("Certs")
+'		V.Passed.000023.Set("Certs")
+'		V.Passed.000024.Set("Certs")
+	F.Intrinsic.Control.Case(14461)
+		'Vendor Master Vendor Change Hook - write in asterick for script button
+		F.Intrinsic.Control.If(V.Passed.000002.Trim,!=,"")
+			F.Intrinsic.String.RPad(V.Passed.000002," ",6,V.Global.sVendor)
+			
+			F.Intrinsic.Control.CallSub(CheckForCerts)
+			
+			F.Intrinsic.Control.If(V.DataView.dtVendCerts!dvActive.RowCount,>,0)
+				'Vendor has active certs, add an asterick to script button
+				V.Passed.000022.Set("* Certs *")
+'				F.Intrinsic.Variable.SetProperty("000023","FC",32768)
+'				F.Intrinsic.Variable.SetProperty("000024","FC",32768)
+			F.Intrinsic.Control.Else
+				'Vendor has no active certs, write in standard name for script button
+				V.Passed.000022.Set("Certs")
+'				F.Intrinsic.Variable.SetProperty("000023","FC",0)
+'				F.Intrinsic.Variable.SetProperty("000024","FC",0)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Else
+			V.Passed.000022.Set("Certs")
+'			F.Intrinsic.Variable.SetProperty("000023","FC",0)
+'			F.Intrinsic.Variable.SetProperty("000024","FC",0)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.CaseAny(14480,14490,14500)
+		'Vendor Master Script Button Hooks - launch vendors certifications screen
+		F.Intrinsic.Control.If(V.Passed.000002.Trim,!=,"")
+			F.Intrinsic.String.RPad(V.Passed.000002," ",6,V.Global.sVendor)
+			
+			F.Intrinsic.Control.CallSub(CheckForCerts)
+			
+			'for this screen to open, the maintenance table needs values OR the vendor needs active certifications
+			F.Intrinsic.Control.If(V.DataTable.dtMaint.RowCount,=,0,and,V.DataView.dtVendCerts!dvActive.RowCount,=,0)
+				F.Intrinsic.UI.Msgbox("Vendor does not have any active certifications and there are no certifications setup in your system.","Exiting Program")
+				F.Data.DataTable.Close("dtMaint")
+				F.Data.DataTable.Close("dtVendCerts")
+				F.Intrinsic.Control.End
+			F.Intrinsic.Control.EndIf
+			
+			F.Intrinsic.Control.CallSub(DisplayVendorCertsScreen,"VendName",V.Passed.000048.Trim)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.CaseElse
+		'Menu Item - Certs Maintenance
+		F.Intrinsic.Control.CallSub(DisplayMaintScreen)
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.F_Cert_Maint_UnLoad.Start
+F.Data.DataTable.Close("dtMaint")
+F.Intrinsic.Control.End
+Program.Sub.F_Cert_Maint_UnLoad.End
+
+Program.Sub.DisplayMaintScreen.Start
+'Open maint table and launch maint screen
+F.Intrinsic.Control.Try
+
+F.ODBC.Connection!con.OpenCompanyConnection
+F.Data.DataTable.CreateFromSQL("dtRptIds","con","select TYPE, RPT_ID from GCG_5885_BI_RPTS;",True)
+F.Data.DataTable.CreateFromSQL("dtMaint","con","select ID, rtrim(CERTIFICATION) as CERTIFICATION from GCG_5885_CERTS;",True)
+F.ODBC.Connection!con.Close
+
+F.Data.DataView.Create("dtRptIds","dvSummary")
+F.Data.DataView.Create("dtRptIds","dvDetail")
+F.Data.DataView.SetFilter("dtRptIds","dvSummary","TYPE = 0")
+F.Data.DataView.SetFilter("dtRptIds","dvDetail","TYPE = 1")
+F.Intrinsic.Control.If(V.DataView.dtRptIds!dvSummary.RowCount,>,0)
+	Gui.F_Cert_Maint.txtSum.Text(V.DataView.dtRptIds!dvSummary(0).RPT_ID!FieldVal)
+F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.If(V.DataView.dtRptIds!dvDetail.RowCount,>,0)
+	Gui.F_Cert_Maint.txtDet.Text(V.DataView.dtRptIds!dvDetail(0).RPT_ID!FieldVal)
+F.Intrinsic.Control.EndIf
+
+Gui.F_Cert_Maint.gsgcMaint.AddGridviewFromDatatable("gvMaint","dtMaint")
+
+Gui.F_Cert_Maint.gsgcMaint.SetGridviewProperty("gvMaint","MultiSelect",False)
+Gui.F_Cert_Maint.gsgcMaint.SetGridviewProperty("gvMaint","Editable",True)
+Gui.F_Cert_Maint.gsgcMaint.SetGridviewProperty("gvMaint","ReadOnly",False)
+
+Gui.F_Cert_Maint.gsgcMaint.SetColumnProperty("gvMaint","ID","Visible",False)
+Gui.F_Cert_Maint.gsgcMaint.SetColumnProperty("gvMaint","ID","AllowShowHide",False)
+
+Gui.F_Cert_Maint.gsgcMaint.SetColumnProperty("gvMaint","CERTIFICATION","Caption","Cert")
+Gui.F_Cert_Maint.gsgcMaint.SetColumnProperty("gvMaint","CERTIFICATION","HeaderFontBold",True)
+Gui.F_Cert_Maint.gsgcMaint.SetColumnProperty("gvMaint","CERTIFICATION","AllowShowHide",False)
+
+Gui.F_Cert_Maint.gsgcMaint.MainView("gvMaint")
+
+Gui.F_Cert_Maint..Show
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.DisplayMaintScreen.End
+
+Program.Sub.cmdAddMaint_Click.Start
+'Add a new row to the maint datatable and save to db
+V.Local.iID.Declare
+F.Intrinsic.Control.Try
+
+F.Data.DataTable.Compute("dtMaint","MAX(ID)","",V.Local.iID)
+F.Data.DataTable.AddRow("dtMaint","ID",V.Local.iID.++,"CERTIFICATION","New Certification")
+	
+F.Intrinsic.Control.CallSub(MaintSave,"Mode",7)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdAddMaint_Click.End
+
+Program.Sub.cmdDelMaint_Click.Start
+'delete selected row (if maint datatable has rows)
+V.Local.sRow.Declare
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.If(V.DataTable.dtMaint.RowCount,>,0)
+	Gui.F_Cert_Maint.gsgcMaint.GetSelectedRows("gvMaint",V.Local.sRow)
+	F.Data.DataTable.DeleteRow("dtMaint",V.Local.sRow.Long)
+	
+	F.Intrinsic.Control.CallSub(MaintSave,"Mode",7)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdDelMaint_Click.End
+
+Program.Sub.MaintSave.Start
+'Push maint data to database
+F.Intrinsic.Control.Try
+
+F.ODBC.Connection!con.OpenCompanyConnection
+F.Data.DataTable.SaveToDB("dtMaint","con","GCG_5885_CERTS","ID",V.Args.Mode)
+F.ODBC.Connection!con.Close
+
+F.Data.DataTable.AcceptChanges("dtMaint")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.MaintSave.End
+
+Program.Sub.gsgcMaint_CellValueChanged.Start
+'Push maint data to database if there was a change
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.CallSub(MaintSave,"Mode",256)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.gsgcMaint_CellValueChanged.End
+
+Program.Sub.CheckForCerts.Start
+'Open the vendor certs and maint tables and check if they have proper data
+V.Local.sSQL.Declare
+V.Local.sExpression.Declare
+F.Intrinsic.Control.Try
+
+F.Intrinsic.String.Build("select ID, rtrim(VENDOR) as VENDOR, rtrim(CERTIFICATION) as CERTIFICATION, START_DATE, END_DATE from GCG_5885_VEND_CERTS where VENDOR = '{0}';",V.Global.sVendor,V.Local.sSQL)
+
+F.ODBC.Connection!con.OpenCompanyConnection
+F.Data.DataTable.CreateFromSQL("dtMaint","con","select ID, rtrim(CERTIFICATION) as CERTIFICATION from GCG_5885_CERTS;",True)
+F.Data.DataTable.CreateFromSQL("dtVendCerts","con",V.Local.sSQL,True)
+F.ODBC.Connection!con.Close
+
+'Set an active flag to see if any certifications are 'active' for the current vendor
+F.Intrinsic.String.Build("IIF(#{0}# <= [END_DATE] and #{0}# >= [START_DATE], True, False)",V.Ambient.Date.String,V.Local.sExpression)
+F.Data.DataTable.AddExpressionColumn("dtVendCerts","ACTIVE_CERT","Boolean",V.Local.sExpression)
+
+F.Data.DataView.Create("dtVendCerts","dvActive")
+F.Data.DataView.SetFilter("dtVendCerts","dvActive","[ACTIVE_CERT] = True")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.CheckForCerts.End
+
+Program.Sub.DisplayVendorCertsScreen.Start
+'launch the vendor certs screen
+V.Local.sCaption.Declare
+V.Local.iCnt.Declare
+V.Local.dOneYear.Declare
+V.Local.bPerms.Declare
+F.Intrinsic.Control.Try
+
+'Checks access to AP > File > Vendors > Open and Delete and turns the buttons on or off
+F.Global.Security.CheckUserAccessIPM(2,1,V.Local.bPerms)
+Gui.F_Vend_Certs.cmdAdd.Enabled(V.Local.bPerms)
+F.Global.Security.CheckUserAccessIPM(2,3,V.Local.bPerms)
+Gui.F_Vend_Certs.cmdDel.Enabled(V.Local.bPerms)
+
+'write caption with Vendor name to top of form
+F.Intrinsic.String.Build("{0} Certifications",V.Args.VendName,V.Local.sCaption)
+Gui.F_Vend_Certs..Caption(V.Local.sCaption)
+
+'add maint certs to drop down list on NEW screen
+F.Intrinsic.Control.For(V.Local.iCnt,0,V.DataTable.dtMaint.RowCount--,1)
+	Gui.F_New_Cert.ddlCert.AddItem(V.DataTable.dtMaint(V.Local.iCnt).CERTIFICATION!FieldVal)
+F.Intrinsic.Control.Next(V.Local.iCnt)
+
+'in the End Date dtp, use the date one year from now
+F.Intrinsic.Date.DateAdd("yyyy",1,V.Ambient.Date,V.Local.dOneYear)
+Gui.F_New_Cert.dtpEndDate.Value(V.Local.dOneYear)
+
+Gui.F_Vend_Certs.gsgcCerts.AddGridviewFromDatatable("gvVendCerts","dtVendCerts")
+
+Gui.F_Vend_Certs.gsgcCerts.SetGridviewProperty("gvVendCerts","Editable",False)
+Gui.F_Vend_Certs.gsgcCerts.SetGridviewProperty("gvVendCerts","ReadOnly",True)
+Gui.F_Vend_Certs.gsgcCerts.SetGridviewProperty("gvVendCerts","OptionsViewColumnAutoWidth",False)
+Gui.F_Vend_Certs.gsgcCerts.SetGridviewProperty("gvVendCerts","MultiSelect",False)
+
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","ID","Visible",False)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","ID","AllowShowHide",False)
+
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","VENDOR","Visible",False)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","VENDOR","AllowShowHide",False)
+
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","CERTIFICATION","Caption","Cert")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","CERTIFICATION","HeaderFontBold",True)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","CERTIFICATION","Width",150)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","CERTIFICATION","AllowShowHide",False)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","CERTIFICATION","AllowFocus",False)
+
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","START_DATE","Caption","Start")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","START_DATE","HeaderFontBold",True)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","START_DATE","Width",70)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","START_DATE","AllowShowHide",False)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","START_DATE","DisplayCustomDateTime","d")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","START_DATE","HeaderHAlignment","Center")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","START_DATE","CellHAlignment","Center")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","START_DATE","AllowFocus",False)
+
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","END_DATE","Caption","End")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","END_DATE","HeaderFontBold",True)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","END_DATE","Width",70)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","END_DATE","AllowShowHide",False)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","END_DATE","DisplayCustomDateTime","d")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","END_DATE","HeaderHAlignment","Center")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","END_DATE","CellHAlignment","Center")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","END_DATE","AllowFocus",False)
+
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","ACTIVE_CERT","Caption","Active")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","ACTIVE_CERT","HeaderFontBold",True)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","ACTIVE_CERT","Width",45)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","ACTIVE_CERT","AllowShowHide",False)
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","ACTIVE_CERT","HeaderHAlignment","Center")
+Gui.F_Vend_Certs.gsgcCerts.SetColumnProperty("gvVendCerts","ACTIVE_CERT","AllowFocus",False)
+
+Gui.F_Vend_Certs.gsgcCerts.AddStyleFormatCondition("gvVendCerts","ACTIVE_CERT","ActiveCert","Equal",True)
+Gui.F_Vend_Certs.gsgcCerts.SetStyleFormatConditionProperty("gvVendCerts","ACTIVE_CERT","ActiveCert","BackColor","LightGreen")
+Gui.F_Vend_Certs.gsgcCerts.SetStyleFormatConditionProperty("gvVendCerts","ACTIVE_CERT","ActiveCert","ApplyToRow",True)
+Gui.F_Vend_Certs.gsgcCerts.AddStyleFormatCondition("gvVendCerts","ACTIVE_CERT","InactiveCert","Equal",False)
+Gui.F_Vend_Certs.gsgcCerts.SetStyleFormatConditionProperty("gvVendCerts","ACTIVE_CERT","InactiveCert","BackColor","Pink")
+Gui.F_Vend_Certs.gsgcCerts.SetStyleFormatConditionProperty("gvVendCerts","ACTIVE_CERT","InactiveCert","ApplyToRow",True)
+
+Gui.F_Vend_Certs.gsgcCerts.MainView("gvVendCerts")
+
+F.Intrinsic.Control.CallSub(Deserialize)
+
+Gui.F_Vend_Certs..Show
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.DisplayVendorCertsScreen.End
+
+Program.Sub.F_Vend_Certs_UnLoad.Start
+F.Intrinsic.Control.CallSub(Serialize)
+F.Data.DataTable.Close("dtVendCerts")
+F.Intrinsic.Control.CallSub(F_Cert_Maint_UnLoad)
+Program.Sub.F_Vend_Certs_UnLoad.End
+
+Program.Sub.F_New_Cert_UnLoad.Start
+'close NEW screen and return to vendor certs screen
+Gui.F_New_Cert..Visible(False)
+Gui.F_Vend_Certs..Enabled(True)
+Gui.F_Vend_Certs..SetFocus
+Program.Sub.F_New_Cert_UnLoad.End
+
+Program.Sub.cmdAdd_Click.Start
+'disable the vendor certs screen and open the NEW screen
+Gui.F_Vend_Certs..Enabled(False)
+Gui.F_New_Cert..Show
+Program.Sub.cmdAdd_Click.End
+
+Program.Sub.dtpStartDate_Change.Start
+'make sure the start comes before the end
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.If(V.Screen.F_New_Cert!dtpStartDate.Value,>,V.Screen.F_New_Cert!dtpEndDate.Value)
+	Gui.F_New_Cert.dtpStartDate.Value(V.Screen.F_New_Cert!dtpEndDate.Value)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.dtpStartDate_Change.End
+
+Program.Sub.dtpEndDate_Change.Start
+'make sure the end comes after the start
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.If(V.Screen.F_New_Cert!dtpEndDate.Value,<,V.Screen.F_New_Cert!dtpStartDate.Value)
+	Gui.F_New_Cert.dtpEndDate.Value(V.Screen.F_New_Cert!dtpStartDate.Value)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.dtpEndDate_Change.End
+
+Program.Sub.cmdSaveCert_Click.Start
+'add values from NEW screen to vendor certs datatable and push to database
+V.Local.iID.Declare
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.If(V.Screen.F_New_Cert!ddlCert.Text.Trim,=,"")
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+
+Gui.F_New_Cert..Visible(False)
+
+F.ODBC.Connection!con.OpenCompanyConnection
+F.ODBC.Connection!con.ExecuteAndReturn("select max(ID) from GCG_5885_VEND_CERTS;",V.Local.iID)
+F.ODBC.Connection!con.Close
+F.Intrinsic.Control.If(V.Ambient.ExecuteAndReturnEOF)
+	V.Local.iID.Set(0)
+F.Intrinsic.Control.EndIf
+F.Data.DataTable.AddRow("dtVendCerts","ID",V.Local.iID.++,"VENDOR",V.Global.sVendor,"CERTIFICATION",V.Screen.F_New_Cert!ddlCert.Text.Trim,"START_DATE",V.Screen.F_New_Cert!dtpStartDate.Value,"END_DATE",V.Screen.F_New_Cert!dtpEndDate.Value)
+
+F.Intrinsic.Control.CallSub(CertsSave,"Mode",7)
+
+Gui.F_Vend_Certs..Enabled(True)
+Gui.F_Vend_Certs..SetFocus
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdSaveCert_Click.End
+
+Program.Sub.CertsSave.Start
+'push vendor certs datatable to database
+F.Intrinsic.Control.Try
+
+F.Data.DataTable.Clone("dtVendCerts","dtSave",True)
+F.Data.DataTable.RemoveColumn("dtSave","ACTIVE_CERT")
+F.Data.DataTable.Merge("dtVendCerts","dtSave",True,2)
+
+F.ODBC.Connection!con.OpenCompanyConnection
+F.Data.DataTable.SaveToDB("dtSave","con","GCG_5885_VEND_CERTS","ID",V.Args.Mode)
+F.ODBC.Connection!con.Close
+
+F.Data.DataTable.Close("dtSave")
+F.Data.DataTable.AcceptChanges("dtVendCerts")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.CertsSave.End
+
+Program.Sub.cmdDel_Click.Start
+'remove selected row from vendor certs datatable and push data to database
+V.Local.sRow.Declare
+F.Intrinsic.Control.Try
+
+F.Intrinsic.Control.If(V.DataTable.dtVendCerts.RowCount,>,0)
+	Gui.F_Vend_Certs.gsgcCerts.GetSelectedRows("gvVendCerts",V.Local.sRow)
+	F.Data.DataTable.DeleteRow("dtVendCerts",V.Local.sRow.Long)
+	
+	F.Intrinsic.Control.CallSub(CertsSave,"Mode",7)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdDel_Click.End
+
+Program.Sub.Serialize.Start
+V.Local.Serialize.Declare
+F.Intrinsic.Control.Try
+
+'GridView - gvVendCerts
+Gui.F_Vend_Certs.gsgcCerts.Serialize("gvVendCerts",V.Local.Serialize)
+F.Global.Registry.AddValue(V.Caller.User,V.Caller.CompanyCode,"gvVendCerts",5885,1000,False,"Serialize",False,0,-999.0,1/1/1980,12:00:00 AM,V.Local.Serialize)
+
+Gui.F_Vend_Certs..WindowState(0)
+'WindowWidth - F_Vend_Certs
+F.Global.Registry.AddValue(V.Caller.User,V.Caller.CompanyCode,"F_Vend_CertsW",5885,1000,False,"Width",False,V.Screen.F_Vend_Certs.Width,-999.0,1/1/1980,12:00:00 AM,"")
+'WindowHeight - F_Vend_Certs
+F.Global.Registry.AddValue(V.Caller.User,V.Caller.CompanyCode,"F_Vend_CertsH",5885,1000,False,"Height",False,V.Screen.F_Vend_Certs.Height,-999.0,1/1/1980,12:00:00 AM,"")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.Serialize.End
+
+Program.Sub.Deserialize.Start
+V.Local.Serialize.Declare
+V.Local.iWidth.Declare
+V.Local.iHeight.Declare
+F.Intrinsic.Control.Try
+
+'GridView - gvVendCerts
+F.Global.Registry.ReadValue(V.Caller.User,V.Caller.CompanyCode,"gvVendCerts",5885,1000,6,"",V.Local.Serialize)
+F.Intrinsic.Control.If(V.Local.Serialize.Trim,<>,"")
+	Gui.F_Vend_Certs.gsgcCerts.Deserialize(V.Local.Serialize)
+F.Intrinsic.Control.EndIf
+
+'WindowWidth - F_Vend_Certs
+F.Global.Registry.ReadValue(V.Caller.User,V.Caller.CompanyCode,"F_Vend_CertsW",5885,1000,1,-1,V.Local.iWidth)
+'WindowHeight - F_Vend_Certs
+F.Global.Registry.ReadValue(V.Caller.User,V.Caller.CompanyCode,"F_Vend_CertsH",5885,1000,1,-1,V.Local.iHeight)
+F.Intrinsic.Control.If(V.Local.iWidth,<>,-1,and,V.Local.iHeight,<>,-1)
+	Gui.F_Vend_Certs..Size(V.Local.iWidth,V.Local.iHeight)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.Deserialize.End
+
+Program.Sub.cmdBRW_click.Start
+V.Local.sRet.Declare
+V.Local.sSQL.Declare
+F.Intrinsic.Control.Try
+
+F.Intrinsic.UI.Browser(90010,"",V.Local.sRet)
+
+F.Intrinsic.Control.If(V.Local.sRet.IsNotCancel)
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+	
+	F.Intrinsic.Control.If(V.Args.ControlName.UCase,=,"CMDSUMBRW")
+		Gui.F_Cert_Maint.txtSum.Text(V.Local.sRet(0))
+		F.Intrinsic.Control.If(V.DataView.dtRptIds!dvSummary.RowCount,>,0)
+			F.Data.DataView.SetValue("dtRptIds","dvSummary",-1,"RPT_ID",V.Local.sRet(0).Long)
+		F.Intrinsic.Control.Else
+			F.Data.DataTable.AddRow("dtRptIds","TYPE",0,"RPT_ID",V.Local.sRet(0).Long)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.Else
+		Gui.F_Cert_Maint.txtDet.Text(V.Local.sRet(0))
+		F.Intrinsic.Control.If(V.DataView.dtRptIds!dvDetail.RowCount,>,0)
+			F.Data.DataView.SetValue("dtRptIds","dvDetail",-1,"RPT_ID",V.Local.sRet(0).Long)
+		F.Intrinsic.Control.Else
+			F.Data.DataTable.AddRow("dtRptIds","TYPE",1,"RPT_ID",V.Local.sRet(0).Long)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+	
+	'Save report IDs
+	F.ODBC.Connection!con.OpenCompanyConnection
+	F.Data.DataTable.SaveToDB("dtRptIds","con","GCG_5885_BI_RPTS","TYPE")
+	F.ODBC.Connection!con.Close
+	F.Data.DataTable.AcceptChanges("dtRptIds")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.CallSub(ErrorMessage,"ScriptFile",V.Caller.ScriptFile,"CurrentSubroutine",V.Ambient.CurrentSubroutine)
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdBRW_click.End
